@@ -726,8 +726,6 @@ static int fd_read(struct current *current)
             /* Note that control characters are already translated in AsciiChar */
             else if (k->wVirtualKeyCode == VK_CONTROL)
 	        continue;
-            else if (k->wVirtualKeyCode == VK_TAB)
-	        return '\r';
             else {
 #ifdef USE_UTF8
                 return k->uChar.UnicodeChar;
@@ -1235,6 +1233,8 @@ process_char:
                         }
                         continue;
                     }
+                   else if (c == '\t')
+	               c = '\r';
 #ifdef USE_TERMIOS
                     if (c == 27) {
                         c = check_special(current->fd);
